@@ -25,7 +25,12 @@
 		"noUncheckedSideEffectImports": true,
 		"types": [
 			"unplugin-turbo-console/client"
-		]
+		],
+		"composite": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
 	"include": [
 		"src/**/*.ts",
