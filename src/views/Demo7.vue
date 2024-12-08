@@ -8,6 +8,11 @@ const rectLeft = 0;
 const rectTop = 1;
 const rectRight = 2;
 const rectBottom = 3;
+const spiralSkSL = `
+    uniform float4 in_colors0;
+    half4 main(float2 p) {
+        return in_colors0;
+    }`;
 
 function SkottieExample(CanvasKit, id, jsonStr, bounds, assets) {
   if (!CanvasKit || !jsonStr) {
@@ -598,8 +603,9 @@ function ColorSupport(CanvasKit) {
   surface.delete();
 }
 
+let CanvasKit = null;
+
 async function startRendering() {
-  let CanvasKit = null;
   const cdn = "https://storage.googleapis.com/skia-cdn/misc/";
 
   const ckLoaded = CanvasKitInit({ locateFile: () => CanvasKitWasm });
@@ -619,7 +625,6 @@ async function startRendering() {
   // Examples which only require canvaskit
   ckLoaded.then((CK) => {
     CanvasKit = CK;
-    window!.CanvasKit = CK;
     RTShaderAPI1(CanvasKit);
     ColorSupport(CanvasKit);
     SkpExample(CanvasKit);
