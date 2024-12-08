@@ -3,9 +3,10 @@ import type { Canvas, CanvasKit } from "canvaskit-wasm";
 // @ts-ignore
 import CanvasKitInit from "canvaskit-wasm/bin/canvaskit.js";
 import CanvasKitWasm from "canvaskit-wasm/bin/canvaskit.wasm?url";
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, shallowRef } from "vue";
 
-const paintRef = ref();
+// 这里使用浅引用，可以避免内存泄漏
+const paintRef = shallowRef<CanvasKit>();
 
 function init() {
   CanvasKitInit({ locateFile: () => CanvasKitWasm }).then(
