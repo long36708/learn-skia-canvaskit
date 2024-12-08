@@ -57,3 +57,6 @@ export function simpleHash(str: string) {
   }
   return new Uint32Array([hash])[0].toString(36);
 };
+
+export const isBrowser
+    = typeof window !== "undefined" && typeof window.document !== "undefined";

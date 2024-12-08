@@ -22,12 +22,15 @@ onUnmounted(
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <h1>Hello Skia CanvasKit on Vite Demo2!</h1>
     <canvas id="stage" width="300" height="300" />
   </div>
 </template>
 
 <style scoped>
-
+.container{
+  width: 100%;
+  height: 100%;
+}
 </style>
