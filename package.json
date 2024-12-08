@@ -10,12 +10,15 @@
 	},
 	"dependencies": {
 		"canvaskit-wasm": "^0.39.1",
+		"color": "^4.2.3",
 		"gl-matrix": "^3.4.3",
 		"html-to-image": "^1.11.11",
+		"skia-canvas": "^2.0.0",
 		"vue": "^3.5.13"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^3.11.2",
+		"@types/color": "^4.2.0",
 		"@types/node": "^22.10.1",
 		"@vitejs/plugin-vue": "^5.2.1",
 		"code-inspector-plugin": "^0.18.2",

@@ -1,6 +1,5 @@
 import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
-import { codeInspectorPlugin } from "code-inspector-plugin";
 import TurboConsole from "unplugin-turbo-console/vite";
 
 import { defineConfig } from "vite";
@@ -12,9 +11,9 @@ export default defineConfig({
     TurboConsole({
       extendedPathFileNames: ["index"],
     }),
-    codeInspectorPlugin({
-      bundler: "vite",
-    }),
+    // codeInspectorPlugin({
+    //   bundler: "vite",
+    // }),
   ],
   resolve: {
     // https://vitejs.dev/config/shared-options.html#resolve-alias

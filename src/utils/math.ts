@@ -121,6 +121,8 @@ function div(num1: NumType, num2: NumType, ...others: NumType[]): number {
 
 /**
  * 四舍五入
+ * @param num 数值
+ * @param ratio 小数点后位数
  */
 function round(num: NumType, ratio: number): number {
   const base = 10 ** ratio;

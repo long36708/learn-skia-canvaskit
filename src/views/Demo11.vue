@@ -1,0 +1,114 @@
+<script setup lang="ts">
+import type { BlendMode, CanvasKit } from "canvaskit-wasm/bin/canvaskit.js";
+import CanvasKitInit from "canvaskit-wasm/bin/canvaskit.js";
+import { onMounted } from "vue";
+
+function draw(canvas: HTMLCanvasElement, CanvasKit: CanvasKit, blendMode: BlendMode) {
+  // 创建画布
+  const surface = CanvasKit.MakeWebGLCanvasSurface(canvas)!;
+
+  const paint1 = new CanvasKit.Paint();
+  paint1.setColor(CanvasKit.Color4f(1, 0, 0, 0.5));
+
+  const paint2 = new CanvasKit.Paint();
+  paint2.setColor(CanvasKit.Color4f(0, 1, 0, 0.5));
+  paint2.setBlendMode(blendMode);
+
+  // const paint3 = new CanvasKit.Paint();
+  // paint3.setColor(CanvasKit.Color4f(0, 1, 0, 1));
+
+  const rect1 = CanvasKit.XYWHRect(100, 100, 100, 100);
+  const rect2 = CanvasKit.XYWHRect(150, 150, 100, 100);
+
+  surface.drawOnce((canvas) => {
+    // canvas.clear(CanvasKit.WHITE);
+
+    canvas.drawRect(rect1, paint1);
+
+    // canvas.saveLayer(paint2);
+    canvas.drawRect(rect2, paint2);
+    // canvas.restore();
+  });
+}
+
+async function startRendering() {
+  const CanvasKit = await CanvasKitInit({
+    locateFile: file => `/node_modules/canvaskit-wasm/bin/${file}`,
+  });
+
+  const blendModes = [
+    [CanvasKit.BlendMode.DstIn, "dstIn"],
+    [CanvasKit.BlendMode.SrcIn, "srcIn"],
+    [CanvasKit.BlendMode.Clear, "clear"],
+    [CanvasKit.BlendMode.Src, "src"],
+    [CanvasKit.BlendMode.Dst, "dst"],
+    [CanvasKit.BlendMode.SrcOver, "srcOver"],
+    [CanvasKit.BlendMode.DstOver, "dstOver"],
+    [CanvasKit.BlendMode.SrcOut, "srcOut"],
+    [CanvasKit.BlendMode.DstOut, "dstOut"],
+    [CanvasKit.BlendMode.SrcATop, "srcATop"],
+    [CanvasKit.BlendMode.DstATop, "dstATop"],
+    [CanvasKit.BlendMode.Xor, "xor"],
+    [CanvasKit.BlendMode.Plus, "plus"],
+    [CanvasKit.BlendMode.Modulate, "modulate"],
+    [CanvasKit.BlendMode.Screen, "screen"],
+    [CanvasKit.BlendMode.Overlay, "overlay"],
+    [CanvasKit.BlendMode.Darken, "darken"],
+    [CanvasKit.BlendMode.Lighten, "lighten"],
+    [CanvasKit.BlendMode.ColorDodge, "colorDodge"],
+    [CanvasKit.BlendMode.ColorBurn, "colorBurn"],
+    [CanvasKit.BlendMode.HardLight, "hardLight"],
+    [CanvasKit.BlendMode.SoftLight, "softLight"],
+    [CanvasKit.BlendMode.Difference, "difference"],
+    [CanvasKit.BlendMode.Exclusion, "exclusion"],
+    [CanvasKit.BlendMode.Multiply, "multiply"],
+    [CanvasKit.BlendMode.Hue, "hue"],
+    [CanvasKit.BlendMode.Saturation, "saturation"],
+    [CanvasKit.BlendMode.Color, "color"],
+    [CanvasKit.BlendMode.Luminosity, "luminosity"],
+  ] as const;
+
+  let index = 0;
+  const canvas = document.getElementById("stage") as HTMLCanvasElement;
+  const infoEl = document.getElementById("info")!;
+
+  draw(canvas, CanvasKit, blendModes[index][0]);
+  infoEl.textContent = blendModes[index][1];
+
+  canvas.addEventListener("click", () => {
+    index = (index + 1) % blendModes.length;
+    draw(canvas, CanvasKit, blendModes[index][0]);
+    infoEl.textContent = blendModes[index][1];
+  });
+}
+
+onMounted(startRendering);
+</script>
+
+<template>
+  <div>
+    <h1>
+      canvasKit Demo11 blend mode 混合模式!
+    </h1>
+    <canvas id="stage" width="300" height="300" />
+    <div>
+      <span id="info" />
+    </div>
+  </div>
+</template>
+
+<style scoped>
+canvas {
+  border: 1px solid #000;
+}
+body {
+  background-color: #000;
+}
+#info {
+  display: inline-block;
+  padding: 10px;
+  font-size: 18px;
+  background-color: #000;
+  color: #fff;
+}
+</style>
