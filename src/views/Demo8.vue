@@ -10,7 +10,7 @@ const fontFamilies = [
 ];
 
 function continuousRendering(elementId, getParagraph) {
-  const surface = CanvasKit.MakeCanvasSurface(elementId);
+  const surface = CanvasKit.MakeWebGLCanvasSurface(elementId);
   if (!surface) {
     throw new Error("Could not make surface");
   }
@@ -154,11 +154,11 @@ function getGraphemeBoundaries(text) {
   return graphemeBoundaries;
 }
 
-async function startRendering() {
-  let CanvasKit = null;
-  let fonts = null;
-  let sampleText = null;
+let sampleText = null;
+let CanvasKit = null;
+let fonts = null;
 
+async function startRendering() {
   const cdn = "https://storage.googleapis.com/skia-cdn/misc/";
   const ckLoaded = CanvasKitInit({ locateFile: () => CanvasKitWasm });
   const loadFonts = [
@@ -172,10 +172,7 @@ async function startRendering() {
 
   Promise.all([ckLoaded, ...loadFonts]).then(([_CanvasKit, ..._fonts]) => {
     CanvasKit = _CanvasKit;
-    window.CanvasKit = CanvasKit;
     fonts = _fonts;
-    window.fonts = fonts;
-
     const textarea = document.getElementById("sampleText")!;
     sampleText = textarea.value;
     textarea.addEventListener("input", (e) => {
@@ -200,27 +197,31 @@ onMounted(startRendering);
     <h1>Hello Skia CanvasKit on Vite Demo8 paragraphs!</h1>
     <table>
       <thead>
-        <th>
-          <h2 style="color: red;">
-            With ICU
-          </h2>
-        </th>
-        <th />
-        <th>
-          <h2 style="color: green;">
-            Without ICU
-          </h2>
-        </th>
+        <tr>
+          <th>
+            <h2 style="color: red;">
+              With ICU
+            </h2>
+          </th>
+          <th />
+          <th>
+            <h2 style="color: green;">
+              Without ICU
+            </h2>
+          </th>
+        </tr>
       </thead>
-      <tr>
-        <td>
-          <canvas id="withICU" width="600" height="600" />
-        </td>
-        <td style="width: 20px;" />
-        <td>
-          <canvas id="withoutICU" width="600" height="600" tabindex="-1" />
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>
+            <canvas id="withICU" width="600" height="600" />
+          </td>
+          <td style="width: 20px;" />
+          <td>
+            <canvas id="withoutICU" width="600" height="600" tabindex="-1" />
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <textarea id="sampleText">The لاquick 😠(brown) fox

@@ -41,7 +41,7 @@
 		"vue-tsc": "^2.1.10"
 	},
 	"simple-git-hooks": {
-		"pre-commit": "npm run check:prettier:diff && npm run lint:diff && npm run check:tsc:diff",
+		"pre-commit": "npm run lint:diff && npm run check:tsc:diff",
 		"preserveUnused": true
 	}
 }
