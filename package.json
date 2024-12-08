@@ -4,9 +4,20 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
+		"preinstall": "npx only-allow pnpm",
+		"prepare": "npm run githooks",
+		"githooks": "npx simple-git-hooks",
 		"dev": "vite",
-		"build": "vue-tsc -b && vite build",
-		"preview": "vite preview"
+		"build": "vue-tsc --noEmit && vite build",
+		"preview": "vite preview",
+		"lint": "eslint . --ext ts,tsx",
+		"lint:diff": "git diff HEAD --name-only --diff-filter=d | grep '\\.ts$' | xargs eslint",
+		"prettier:write": "npx prettier --ignore-unknown --write .",
+		"prettier:auto": "git diff HEAD --name-only --diff-filter=d | xargs prettier --write",
+		"check:prettier:diff": "git diff HEAD --name-only --diff-filter=d | xargs prettier --check",
+		"check:tsc": "tsc --noEmit",
+		"check:tsc:diff": "node scripts/tsc-diff.js",
+		"check:tsc:watch": "tsc --watch --noEmit"
 	},
 	"dependencies": {
 		"canvaskit-wasm": "^0.39.1",
@@ -26,6 +37,11 @@
 		"typescript": "~5.6.2",
 		"unplugin-turbo-console": "^1.10.6",
 		"vite": "^6.0.1",
+		"simple-git-hooks": "^2.11.1",
 		"vue-tsc": "^2.1.10"
+	},
+	"simple-git-hooks": {
+		"pre-commit": "npm run check:prettier:diff && npm run lint:diff && npm run check:tsc:diff",
+		"preserveUnused": true
 	}
 }

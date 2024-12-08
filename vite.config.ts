@@ -36,4 +36,15 @@ export default defineConfig({
       },
     },
   },
+  // optimizeDeps: {
+  //   esbuildOptions: {
+  //     keepNames: true,
+  //   },
+  //   force: true,
+  // },
+  assetsInclude: [
+    /\.(png|jpeg|gif|jpg|svg|webp|avif)$/,
+    /\.(mp4|webm|m3u8|avi)$/,
+    /\.(ttf|woff|woff2|eot|otf)$/,
+  ],
 });

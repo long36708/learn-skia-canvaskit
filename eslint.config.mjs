@@ -12,5 +12,10 @@ export default antfu({
     "no-console": "off",
     "no-irregular-whitespace": "off",
     "vue/no-irregular-whitespace": "off", // 不允许空格
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "@typescript-eslint/no-unused-vars": ["off"],
+    "@typescript-eslint/no-duplicate-enum-values": ["warn"],
+    "@typescript-eslint/no-unnecessary-type-constraint": ["off"],
+    "@typescript-eslint/no-this-alias": ["off"],
   },
 });
