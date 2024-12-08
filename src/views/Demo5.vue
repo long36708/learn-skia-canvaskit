@@ -37,12 +37,15 @@ function MultiCanvasExample(CanvasKit, imgBytes) {
     img = CanvasKit.MakeImageFromEncoded(imgBytes);
 
     canvasOne.drawImageCubic(img, 10, 10, 0.3, 0.3, null);
+    // 刷新画布
     surfOne.flush();
 
     canvasTwo.drawImageCubic(img, 10, 10, 0.3, 0.3, null);
+    // 刷新画布
     surfTwo.flush();
 
     canvasThree.drawImageCubic(img, 10, 10, 0.3, 0.3, null);
+    // 刷新画布
     surfThree.flush();
 
     window.requestAnimationFrame(thirdFrame);
